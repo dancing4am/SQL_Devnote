@@ -1,0 +1,15 @@
+C:\Users\skyma\source\repos\SQL_Devnote\bin\Debug\net6.0\SQL_Devnote.exe
+C:\Users\skyma\source\repos\SQL_Devnote\bin\Debug\net6.0\SQL_Devnote.deps.json
+C:\Users\skyma\source\repos\SQL_Devnote\bin\Debug\net6.0\SQL_Devnote.runtimeconfig.json
+C:\Users\skyma\source\repos\SQL_Devnote\bin\Debug\net6.0\SQL_Devnote.dll
+C:\Users\skyma\source\repos\SQL_Devnote\bin\Debug\net6.0\SQL_Devnote.pdb
+C:\Users\skyma\source\repos\SQL_Devnote\obj\Debug\net6.0\SQL_Devnote.csproj.AssemblyReference.cache
+C:\Users\skyma\source\repos\SQL_Devnote\obj\Debug\net6.0\SQL_Devnote.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\skyma\source\repos\SQL_Devnote\obj\Debug\net6.0\SQL_Devnote.AssemblyInfoInputs.cache
+C:\Users\skyma\source\repos\SQL_Devnote\obj\Debug\net6.0\SQL_Devnote.AssemblyInfo.cs
+C:\Users\skyma\source\repos\SQL_Devnote\obj\Debug\net6.0\SQL_Devnote.csproj.CoreCompileInputs.cache
+C:\Users\skyma\source\repos\SQL_Devnote\obj\Debug\net6.0\SQL_Devnote.dll
+C:\Users\skyma\source\repos\SQL_Devnote\obj\Debug\net6.0\refint\SQL_Devnote.dll
+C:\Users\skyma\source\repos\SQL_Devnote\obj\Debug\net6.0\SQL_Devnote.pdb
+C:\Users\skyma\source\repos\SQL_Devnote\obj\Debug\net6.0\SQL_Devnote.genruntimeconfig.cache
+C:\Users\skyma\source\repos\SQL_Devnote\obj\Debug\net6.0\ref\SQL_Devnote.dll
