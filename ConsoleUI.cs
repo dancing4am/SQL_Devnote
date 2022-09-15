@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#define CONSOLE_UI
+
+using System;
 
 namespace SQL_Devnote
 {
@@ -10,17 +8,20 @@ namespace SQL_Devnote
     {
         internal static readonly ConsoleUI Instance = new ConsoleUI();      // singleton
 
+        #region Fields
         ConsoleColor logoColor = ConsoleColor.Green;
         ConsoleColor numColor = ConsoleColor.Magenta;        
         ConsoleColor menuColor = ConsoleColor.Cyan;
         ConsoleColor baseColor = ConsoleColor.White;
         ConsoleColor warnColor = ConsoleColor.Red;
+        #endregion
 
-        private ConsoleUI()
+        private ConsoleUI()     // close access for singleton
         {
-            // private for singleton
+            
         }
 
+        #region Menu
         internal void MainMenu()
         {
             do
@@ -34,7 +35,7 @@ namespace SQL_Devnote
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("    Enter the number: ");
 
-                switch (GetNumberInput())
+                switch (GetIntInput())
                 {
                     case 1:
                         DataMenu();
@@ -52,7 +53,7 @@ namespace SQL_Devnote
             } while (true);
         }
 
-        internal void DataMenu()
+        private void DataMenu()
         {
             do
             {
@@ -62,11 +63,39 @@ namespace SQL_Devnote
                 NumMenu(2, "Update");
                 NumMenu(3, "Remove");
                 NumMenu(4, "Main Menu");
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("    Enter the number: ");
 
-                switch (GetNumberInput())
+                switch (GetIntInput())
+                {
+                    case 1:
+                        DataEditor.Instance.Add();
+                        break;
+                    case 2:
+                        DataEditor.Instance.Update();
+                        break;
+                    case 3:
+                        DataEditor.Instance.Remove();
+                        break;
+                    case 4:
+                        return;
+                    default:
+                        PrintError("Invalid input");
+                        break;
+                }
+            } while (true);
+        }
+
+        private void SearchMenu()
+        {
+            do
+            {
+                Console.Clear();
+                Logo();
+                NumMenu(1, "");
+                NumMenu(2, "");
+                NumMenu(3, "");
+                NumMenu(4, "Main Menu");
+
+                switch (GetIntInput())
                 {
                     case 1:
 
@@ -85,13 +114,10 @@ namespace SQL_Devnote
                 }
             } while (true);
         }
+        #endregion
 
-        internal void SearchMenu()
-        {
-
-        }
-
-        private int GetNumberInput()
+        #region UserInput
+        private int GetIntInput()
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -114,8 +140,9 @@ namespace SQL_Devnote
 
             return -1;
         }
+        #endregion
 
-
+        #region DisplayTemplates
         private void ExitApplication()
         {
             Console.WriteLine();
@@ -135,6 +162,14 @@ namespace SQL_Devnote
             Console.ReadKey();
         }
 
+        private void NumMenu(int num, string text)
+        {
+            Console.ForegroundColor = numColor;
+            Console.Write($"    {num}) ");
+            Console.ForegroundColor = menuColor;
+            Console.WriteLine($"{text}");
+        }
+
         private void Logo()
         {
             Console.WriteLine();
@@ -146,13 +181,6 @@ namespace SQL_Devnote
             Console.WriteLine("     |____/ \\___| \\_/ |_| |_|\\___/ \\__\\___|");
             Console.WriteLine();
         }
-
-        private void NumMenu(int num, string text)
-        {
-            Console.ForegroundColor = numColor;
-            Console.Write($"    {num}) ");
-            Console.ForegroundColor = menuColor;
-            Console.WriteLine($"{text}");
-        }
+        #endregion
     }
 }

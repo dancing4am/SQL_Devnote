@@ -6,7 +6,8 @@ using System.IO;
 using SQL_Devnote;
 
 
+#if CONSOLE_UI
 ConsoleUI.Instance.MainMenu();
-
+#endif
 
 
