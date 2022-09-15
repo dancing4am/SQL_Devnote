@@ -6,13 +6,20 @@ using System.Threading.Tasks;
 
 namespace SQL_Devnote
 {
-    internal class ConsoleUI
+    internal sealed class ConsoleUI
     {
+        internal static readonly ConsoleUI Instance = new ConsoleUI();      // singleton
+
         ConsoleColor logoColor = ConsoleColor.Green;
         ConsoleColor numColor = ConsoleColor.Magenta;        
         ConsoleColor menuColor = ConsoleColor.Cyan;
         ConsoleColor baseColor = ConsoleColor.White;
         ConsoleColor warnColor = ConsoleColor.Red;
+
+        private ConsoleUI()
+        {
+            // private for singleton
+        }
 
         internal void MainMenu()
         {
@@ -27,7 +34,7 @@ namespace SQL_Devnote
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("    Enter the number: ");
 
-                switch (ValidateToInt(GetUserInput()))
+                switch (GetNumberInput())
                 {
                     case 1:
                         DataMenu();
@@ -59,7 +66,7 @@ namespace SQL_Devnote
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("    Enter the number: ");
 
-                switch (ValidateToInt(GetUserInput()))
+                switch (GetNumberInput())
                 {
                     case 1:
 
@@ -84,26 +91,20 @@ namespace SQL_Devnote
 
         }
 
-        private int ValidateToInt(string? input)
+        private int GetNumberInput()
         {
-            if (int.TryParse(input, out int result))
-            {
-                return result;
-            }
-            else
-            {
-                return -1;
-            }
-        }
-
-        private string? GetUserInput()
-        {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("    Enter the number: ");
             Console.ForegroundColor = baseColor;
-            string? input = "";
 
             try
             {
-                input = Console.ReadLine();
+                string? input = Console.ReadLine();
+                if (int.TryParse(input, out int result))
+                {
+                    return result;
+                }
             }
             catch (Exception e)
             {
@@ -111,7 +112,7 @@ namespace SQL_Devnote
                 Console.Clear();
             }
 
-            return input;
+            return -1;
         }
 
 
@@ -119,7 +120,7 @@ namespace SQL_Devnote
         {
             Console.WriteLine();
             Console.ForegroundColor = baseColor;
-            Console.WriteLine(" See ya!");
+            Console.WriteLine("    See ya!");
             Environment.Exit(0);
         }
 
@@ -130,7 +131,7 @@ namespace SQL_Devnote
             Console.Beep();
             Console.Error.WriteLine(msg);
             Console.ForegroundColor = baseColor;
-            Console.Write(" Press Any Key to Continue . . .");
+            Console.Write("    Press Any Key to Continue . . .");
             Console.ReadKey();
         }
 
