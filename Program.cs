@@ -5,8 +5,9 @@ using System.IO;
 
 using SQL_Devnote;
 
-ConsoleUI consoleUI = new ConsoleUI();
-consoleUI.MainMenu();
 
+#if CONSOLE_UI
+ConsoleUI.Instance.MainMenu();
+#endif
 
 
