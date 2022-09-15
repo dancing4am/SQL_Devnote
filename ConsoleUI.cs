@@ -31,9 +31,6 @@ namespace SQL_Devnote
                 NumMenu(1, "Manage Database");
                 NumMenu(2, "Search Data");
                 NumMenu(3, "Exit");
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("    Enter the number: ");
 
                 switch (GetIntInput())
                 {

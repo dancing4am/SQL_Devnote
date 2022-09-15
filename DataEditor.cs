@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
 namespace SQL_Devnote
 {
@@ -17,7 +18,8 @@ namespace SQL_Devnote
 
         internal void Add()
         {
-
+            DBManager.Instance.Connect();
+            //string query = "insert into devnote."
         }
 
         internal void Update()
