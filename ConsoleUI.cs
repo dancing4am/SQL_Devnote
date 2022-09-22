@@ -14,7 +14,51 @@ namespace SQL_Devnote
         ConsoleColor menuColor = ConsoleColor.Cyan;
         ConsoleColor baseColor = ConsoleColor.White;
         ConsoleColor warnColor = ConsoleColor.Red;
+
+        readonly string[] mainMenu = { "Manage Database", "Search Data", "Exit" };
+        readonly string[] dataMenu = { "Add", "Update", "Remove", "Back" };
+        readonly string[] addMenu = { "Namespace", "Class", "Interface", "Field", "Property", "Method", "Struct", "Enum", "Back" };
+        readonly string[] classMenu = { "Namespace", "Class name", "Definition", "Assembly", "Interface", "Description", "Constructor", "Fields", "Properties", "Methods", "Operators", "Extension Methods", "Tags", "Back"};
         #endregion
+
+        /*
+            parent namespace
+
+            parent right above to create a hierarchy
+
+            class name
+
+            definition
+                e.g. 
+                public abstract class Delegate : ICloneable, System.Runtime.Serialization.ISerializable
+
+            assembly
+
+            interface implements
+
+            description
+
+            ‘Remarks’ in the official documentation
+
+            do not just copy-and-paste but abstract
+
+            tags
+
+            string array
+
+            constructors
+
+            fields
+
+            properties
+
+            methods
+
+            operators
+
+            extension methods
+        */
+
 
         private ConsoleUI()     // close access for singleton
         {
@@ -28,9 +72,7 @@ namespace SQL_Devnote
             {
                 Console.Clear();
                 Logo();
-                NumMenu(1, "Manage Database");
-                NumMenu(2, "Search Data");
-                NumMenu(3, "Exit");
+                NumMenu(mainMenu);
 
                 switch (GetIntInput())
                 {
@@ -56,15 +98,12 @@ namespace SQL_Devnote
             {
                 Console.Clear();
                 Logo();
-                NumMenu(1, "Add");
-                NumMenu(2, "Update");
-                NumMenu(3, "Remove");
-                NumMenu(4, "Main Menu");
+                NumMenu(dataMenu);
 
                 switch (GetIntInput())
                 {
                     case 1:
-                        DataEditor.Instance.Add();
+                        AddMenu();
                         break;
                     case 2:
                         DataEditor.Instance.Update();
@@ -87,10 +126,7 @@ namespace SQL_Devnote
             {
                 Console.Clear();
                 Logo();
-                NumMenu(1, "");
-                NumMenu(2, "");
-                NumMenu(3, "");
-                NumMenu(4, "Main Menu");
+//                NumMenu();
 
                 switch (GetIntInput())
                 {
@@ -104,6 +140,88 @@ namespace SQL_Devnote
 
                         break;
                     case 4:
+                        return;
+
+                    default:
+                        PrintError("Invalid input");
+                        break;
+                }
+            } while (true);
+        }
+
+        private void AddMenu()
+        {
+            do
+            {
+                Console.Clear();
+                Logo();
+                NumMenu(addMenu);
+
+                switch (GetIntInput())
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        ClassMenu();
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        break;
+                    case 9:
+                        return;
+                    default:
+                        PrintError("Invalid input");
+                        break;
+                }
+            } while (true);
+        }
+
+        private void ClassMenu()
+        {
+            do
+            {
+                Console.Clear();
+                Logo();
+                NumMenu(classMenu);
+                // https://stackoverflow.com/questions/60767909/c-sharp-console-app-how-do-i-make-an-interactive-menu
+                switch (GetIntInput())
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        break;
+                    case 9:
+                        break;
+                    case 10:
+                        break;
+                    case 11:
+                        break;
+                    case 12:
+                        break;
+                    case 13:
+                        break;
+                    case 14:
                         return;
                     default:
                         PrintError("Invalid input");
@@ -137,9 +255,48 @@ namespace SQL_Devnote
 
             return -1;
         }
+
+        private string GetStringInput()
+        {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("    ");
+            Console.ForegroundColor = baseColor;
+
+            try
+            {
+                string? input = Console.ReadLine();
+                if (int.TryParse(input, out int result))
+                {
+                    //return result;
+                }
+            }
+            catch (Exception e)
+            {
+                PrintError(e.Message);
+                Console.Clear();
+            }
+
+            return "";
+        }
         #endregion
 
+
+
         #region DisplayTemplates
+        private void AddClass()
+        {
+            try
+            {
+               // DataEditor.Instance.Add();
+            }
+            catch (Exception e)
+            {
+                PrintError(e.Message);
+            }
+        }
+
+
         private void ExitApplication()
         {
             Console.WriteLine();
@@ -153,18 +310,21 @@ namespace SQL_Devnote
             Console.WriteLine();
             Console.ForegroundColor = warnColor;
             Console.Beep();
-            Console.Error.WriteLine(msg);
+            Console.Error.WriteLine("    " + msg);
             Console.ForegroundColor = baseColor;
             Console.Write("    Press Any Key to Continue . . .");
             Console.ReadKey();
         }
 
-        private void NumMenu(int num, string text)
+        private void NumMenu(in string[] menu)
         {
-            Console.ForegroundColor = numColor;
-            Console.Write($"    {num}) ");
-            Console.ForegroundColor = menuColor;
-            Console.WriteLine($"{text}");
+            for (int i = 0; i < menu.Length; i++)
+            {
+                Console.ForegroundColor = numColor;
+                Console.Write($"    {i + 1}) ");
+                Console.ForegroundColor = menuColor;
+                Console.WriteLine($"{menu[i]}");
+            }
         }
 
         private void Logo()

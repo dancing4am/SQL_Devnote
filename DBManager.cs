@@ -21,19 +21,19 @@ namespace SQL_Devnote
         // https://zetcode.com/csharp/mysql/
         // http://localhost/phpmyadmin/index.php?route=/database/structure&db=devnote
 
+
         internal void Connect()
         {
             try
             {
-                connection.Open();
-                Console.WriteLine("     Database connected");
-                Console.WriteLine($"        MySQL version : {connection.ServerVersion}");
-                Console.ReadKey();
+                if (!connection.Ping())
+                {
+                    connection.Open();
+                }
             }
-            catch (Exception e)
+            catch
             {
-                Console.WriteLine(e.Message);
-                Console.ReadKey();
+                throw;
             }
         }
 
@@ -60,8 +60,7 @@ namespace SQL_Devnote
             cmd.CommandText = "DROP TABLE IF EXISTS cars";
             cmd.ExecuteNonQuery();
 
-            cmd.CommandText = @"CREATE TABLE cars(id INTEGER PRIMARY KEY AUTO_INCREMENT,
-        name TEXT, price INT)";
+            cmd.CommandText = @"CREATE TABLE cars(id INTEGER PRIMARY KEY AUTO_INCREMENT name TEXT, price INT)";
             cmd.ExecuteNonQuery();
         }
 
