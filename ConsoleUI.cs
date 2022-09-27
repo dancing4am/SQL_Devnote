@@ -21,44 +21,6 @@ namespace SQL_Devnote
         readonly string[] classMenu = { "Namespace", "Class name", "Definition", "Assembly", "Interface", "Description", "Constructor", "Fields", "Properties", "Methods", "Operators", "Extension Methods", "Tags", "Back"};
         #endregion
 
-        /*
-            parent namespace
-
-            parent right above to create a hierarchy
-
-            class name
-
-            definition
-                e.g. 
-                public abstract class Delegate : ICloneable, System.Runtime.Serialization.ISerializable
-
-            assembly
-
-            interface implements
-
-            description
-
-            ‘Remarks’ in the official documentation
-
-            do not just copy-and-paste but abstract
-
-            tags
-
-            string array
-
-            constructors
-
-            fields
-
-            properties
-
-            methods
-
-            operators
-
-            extension methods
-        */
-
 
         private ConsoleUI()     // close access for singleton
         {
