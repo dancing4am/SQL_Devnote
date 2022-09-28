@@ -14,6 +14,7 @@ namespace SQL_Devnote
         ConsoleColor menuColor = ConsoleColor.Cyan;
         ConsoleColor baseColor = ConsoleColor.White;
         ConsoleColor warnColor = ConsoleColor.Red;
+        ConsoleColor commandColor = ConsoleColor.Yellow;
 
         const string BACK_STR = "Back";
         readonly string[] mainMenu = { "Manage Database", "Search Data", "Exit" };
@@ -60,6 +61,7 @@ namespace SQL_Devnote
                 Console.Clear();
                 Logo();
                 NumMenu(dataMenu);
+
                 GetIntInput(out int result);
                 switch (result)
                 {
@@ -85,6 +87,7 @@ namespace SQL_Devnote
                 Console.Clear();
                 Logo();
                 //                NumMenu();
+
                 GetIntInput(out int result);
                 switch (result)
                 {
@@ -110,6 +113,7 @@ namespace SQL_Devnote
                 Console.Clear();
                 Logo();
                 NumMenu(addMenu);
+
                 GetIntInput(out int result);
                 switch (result)
                 {
@@ -144,12 +148,21 @@ namespace SQL_Devnote
                 Logo();
                 NumMenu(classMenu);
                 // https://stackoverflow.com/questions/60767909/c-sharp-console-app-how-do-i-make-an-interactive-menu
+
                 GetIntInput(out int result);
                 switch (result)
                 {
                     case 1:
                         return;
                     case 2:
+                        Data data = new Data("yay");
+                        string[] fields = data.GetFieldInfo();
+
+                        foreach (var s in fields)
+                        {
+                            Console.WriteLine(s);
+                        }
+                        Console.ReadKey();
                         break;
                     case 3:
                         break;
@@ -181,10 +194,10 @@ namespace SQL_Devnote
         #endregion
 
         #region UserInput
-        private void GetIntInput(out int result)   // using return value for both error code and a valid result is not the best option
+        private void GetIntInput(out int result)
         {
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = commandColor;
             Console.Write("    Enter the number: ");
             Console.ForegroundColor = baseColor;
 
@@ -204,10 +217,10 @@ namespace SQL_Devnote
             }
         }
 
-        private string GetStringInput()
+        private string GetStringInput()   // using return value for both error code and a valid result is not the best option
         {
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = commandColor;
             Console.WriteLine("    ");
             Console.ForegroundColor = baseColor;
 
