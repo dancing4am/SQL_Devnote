@@ -15,10 +15,11 @@ namespace SQL_Devnote
         ConsoleColor baseColor = ConsoleColor.White;
         ConsoleColor warnColor = ConsoleColor.Red;
 
+        const string BACK_STR = "Back";
         readonly string[] mainMenu = { "Manage Database", "Search Data", "Exit" };
-        readonly string[] dataMenu = { "Add", "Update", "Remove", "Back" };
-        readonly string[] addMenu = { "Namespace", "Class", "Interface", "Field", "Property", "Method", "Struct", "Enum", "Back" };
-        readonly string[] classMenu = { "Namespace", "Class name", "Definition", "Assembly", "Interface", "Description", "Constructor", "Fields", "Properties", "Methods", "Operators", "Extension Methods", "Tags", "Back"};
+        readonly string[] dataMenu = { BACK_STR, "Add", "Update", "Remove" };
+        readonly string[] addMenu = { BACK_STR, "Namespace", "Class", "Interface", "Field", "Property", "Method", "Struct", "Enum"};
+        readonly string[] classMenu = { BACK_STR, "Namespace", "Class name", "Definition", "Assembly", "Interface", "Description", "Constructor", "Fields", "Properties", "Methods", "Operators", "Extension Methods", "Tags"};
         #endregion
 
 
@@ -36,7 +37,8 @@ namespace SQL_Devnote
                 Logo();
                 NumMenu(mainMenu);
 
-                switch (GetIntInput())
+                GetIntInput(out int result);
+                switch (result)
                 {
                     case 1:
                         DataMenu();
@@ -46,9 +48,6 @@ namespace SQL_Devnote
                         break;
                     case 3:
                         ExitApplication();
-                        break;
-                    default:
-                        PrintError("Invalid input");
                         break;
                 }
             } while (true);
@@ -61,22 +60,19 @@ namespace SQL_Devnote
                 Console.Clear();
                 Logo();
                 NumMenu(dataMenu);
-
-                switch (GetIntInput())
+                GetIntInput(out int result);
+                switch (result)
                 {
                     case 1:
+                        return;
+                    case 2:
                         AddMenu();
                         break;
-                    case 2:
+                    case 3:
                         DataEditor.Instance.Update();
                         break;
-                    case 3:
-                        DataEditor.Instance.Remove();
-                        break;
                     case 4:
-                        return;
-                    default:
-                        PrintError("Invalid input");
+                        DataEditor.Instance.Remove();
                         break;
                 }
             } while (true);
@@ -88,13 +84,12 @@ namespace SQL_Devnote
             {
                 Console.Clear();
                 Logo();
-//                NumMenu();
-
-                switch (GetIntInput())
+                //                NumMenu();
+                GetIntInput(out int result);
+                switch (result)
                 {
                     case 1:
-
-                        break;
+                        return;
                     case 2:
 
                         break;
@@ -102,10 +97,7 @@ namespace SQL_Devnote
 
                         break;
                     case 4:
-                        return;
 
-                    default:
-                        PrintError("Invalid input");
                         break;
                 }
             } while (true);
@@ -118,15 +110,15 @@ namespace SQL_Devnote
                 Console.Clear();
                 Logo();
                 NumMenu(addMenu);
-
-                switch (GetIntInput())
+                GetIntInput(out int result);
+                switch (result)
                 {
                     case 1:
-                        break;
+                        return;
                     case 2:
-                        ClassMenu();
                         break;
                     case 3:
+                        ClassMenu();
                         break;
                     case 4:
                         break;
@@ -139,9 +131,6 @@ namespace SQL_Devnote
                     case 8:
                         break;
                     case 9:
-                        return;
-                    default:
-                        PrintError("Invalid input");
                         break;
                 }
             } while (true);
@@ -155,10 +144,11 @@ namespace SQL_Devnote
                 Logo();
                 NumMenu(classMenu);
                 // https://stackoverflow.com/questions/60767909/c-sharp-console-app-how-do-i-make-an-interactive-menu
-                switch (GetIntInput())
+                GetIntInput(out int result);
+                switch (result)
                 {
                     case 1:
-                        break;
+                        return;
                     case 2:
                         break;
                     case 3:
@@ -184,9 +174,6 @@ namespace SQL_Devnote
                     case 13:
                         break;
                     case 14:
-                        return;
-                    default:
-                        PrintError("Invalid input");
                         break;
                 }
             } while (true);
@@ -194,7 +181,7 @@ namespace SQL_Devnote
         #endregion
 
         #region UserInput
-        private int GetIntInput()
+        private void GetIntInput(out int result)   // using return value for both error code and a valid result is not the best option
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -204,18 +191,17 @@ namespace SQL_Devnote
             try
             {
                 string? input = Console.ReadLine();
-                if (int.TryParse(input, out int result))
+                if (!int.TryParse(input, out result))
                 {
-                    return result;
+                    throw new Exception("Invalid input");
                 }
             }
             catch (Exception e)
             {
+                result = int.MinValue;
                 PrintError(e.Message);
                 Console.Clear();
             }
-
-            return -1;
         }
 
         private string GetStringInput()
@@ -284,7 +270,14 @@ namespace SQL_Devnote
             {
                 Console.ForegroundColor = numColor;
                 Console.Write($"    {i + 1}) ");
-                Console.ForegroundColor = menuColor;
+                if (menu[i].Equals(BACK_STR))
+                {
+                    Console.ForegroundColor = baseColor;
+                }
+                else
+                {
+                    Console.ForegroundColor = menuColor;
+                }
                 Console.WriteLine($"{menu[i]}");
             }
         }

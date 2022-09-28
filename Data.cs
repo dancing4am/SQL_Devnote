@@ -8,6 +8,7 @@ namespace SQL_Devnote
 {
     internal class Data
     {
+        public string Id { get; set; } // ?
         public string parent_namespace;
         public string name;
         public string definition;
@@ -17,9 +18,9 @@ namespace SQL_Devnote
         public List<string> tags;               // array? list?
         public string constructor;              // not all classes implements the same structure... we need to dynamically create a class type. but until before then... put this here.
         public List<string> fields;             // would a dictionary be better here? or handle it using query when getting/setting it?
-        public List<string> properties;         
-        public List<string> methods;
-        public List<string> operators;
+        public List<string> properties;         // or polymorphism? abstract class?
+        public List<string> methods;            // have basic structure of class, and allow additional sections?
+        public List<string> operators;          // use of generic class?
         public List<string> extension_methods;
         
 
