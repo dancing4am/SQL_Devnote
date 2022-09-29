@@ -16,7 +16,7 @@ namespace SQL_Devnote
 
         }
 
-        internal void Add(int type, ref List<string> data)
+        internal void Add(int type, ref Data data)
         {
             try
             {
@@ -26,6 +26,8 @@ namespace SQL_Devnote
                     // switch case and select type of the data to create
                     // receive as parameters of the type and the data
                     // sanitize the string here
+
+
                 } while (!CheckExists());
             }
             catch
