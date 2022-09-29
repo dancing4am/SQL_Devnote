@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,7 +17,7 @@ namespace SQL_Devnote
         public string assembly;
         public string interface_implement;
         public string description;
-        public List<string> tags;               // array? list?
+        public Tags tags;               // array? list?
         public string constructor;              // not all classes implements the same structure... we need to dynamically create a class type. but until before then... put this here. (Reflection feature)
         public List<string> fields;             // would a dictionary be better here? or handle it using query when getting/setting it?
         public List<string> properties;         // or polymorphism? abstract class?
@@ -35,7 +36,7 @@ namespace SQL_Devnote
         {
             FieldInfo[] fieldInfo = this.GetType().GetFields();
             return (from field in fieldInfo
-                   select field.Name).ToArray();
+                   select field.Name).ToArray();                // maybe can be used to call different properties from custom data using expression-dynamic functions? should it be returned in FiledInfo type to access?
         }
 
         /*
@@ -88,8 +89,36 @@ namespace SQL_Devnote
         public void Add(string tag) => list.Add(tag);           // expression bodied method
         public void Remove(string tag) => list.Remove(tag);
 
-        public int Capacity() => list.Capacity;                 // this is read-only
+        //public int Capacity() => list.Capacity;                 // this is read-only
         public string this[int index] => list[index];           // read-only indexer
 
+    }
+
+    internal class Fields
+    {
+        private List<Field> list = new List<Field>();
+        public void Add(Field field) => list.Add(field);
+        public void Remove(string name)
+        {
+            Field? field = list.Find(f => f.Name == name);
+            if (field is not null)
+            {
+                list.Remove(field);
+            }
+        }
+    }
+
+    internal class Field
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
+        public string Definition { get; set; }
+        public string Remarks { get; set; }
+        public string Example { get; set; }
+
+        public Field(string name)
+        {
+            Name = name;
+        }
     }
 }
