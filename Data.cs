@@ -21,7 +21,7 @@ namespace SQL_Devnote
         public string constructor;              // not all classes implements the same structure... we need to dynamically create a class type. but until before then... put this here. (Reflection feature)
         public Fields fields;                   // would a dictionary be better here? or handle it using query when getting/setting it?
         public List<string> properties;         // or polymorphism? abstract class?
-        public List<string> methods;            // have basic structure of class, and allow additional sections?
+        public Methods methods;            // have basic structure of class, and allow additional sections?
         public List<string> operators;          // use of generic class?
         public List<string> extension_methods;  // or use of list of lists?
         
@@ -30,6 +30,7 @@ namespace SQL_Devnote
         {
             parent_namespace = "";
             this.name = name;
+            this.fields = new Fields();
         }
 
         public string[] GetFieldInfo()
@@ -82,7 +83,7 @@ namespace SQL_Devnote
     }
 
 
-    internal class Tags
+    internal class Tags         // do we need this? is this maintainability good or bad?
     {
         private List<string> list = new List<string>();
 
@@ -91,27 +92,43 @@ namespace SQL_Devnote
         public string this[int index] => list[index];           // read-only indexer
     }
 
-    internal class Fields
+
+    abstract class PotentialMultiple<T> where T : NamedData
     {
-        private List<Field> list = new List<Field>();
-        public void Add(Field field) => list.Add(field);
+        private List<T> list = new List<T>();
+
+        public void Add(T item) => list.Add(item);
         public void Remove(string name)
         {
-            Field? field = GetField(name);
-            if (field is not null)
+            T? item = GetItem(name);
+            if (item is not null)
             {
-                list.Remove(field);
+                list.Remove(item);
             }
         }
-        public string[] GetFieldList() => (from field in list
-                                           orderby field.Name
-                                           select field.Name).ToArray() as string[];
+        public string[] GetItemList() => (from item in list
+                                           orderby item.Name
+                                           select item.Name).ToArray() as string[];
 
-        public Field? GetField(string name) => list.Find(f => f.Name == name);
-        public Field[] GetAllFields() => list.ToArray();
+        public T? GetItem(string name) => list.Find(f => f.Name == name);
+        public T[] GetAllItems() => list.ToArray();
     }
 
-    internal class Field
+
+    interface NamedData
+    {
+        public string Name { get; set; }
+        public string Definition { get; set; }
+        public string Remarks { get; set; }
+    }
+
+
+    internal class Fields : PotentialMultiple<Field>
+    {
+        // do we need this or do we have to use a generic class instead?
+    }
+
+    internal class Field : NamedData
     {
         public string Name { get; set; }
         public string Value { get; set; }
@@ -129,23 +146,25 @@ namespace SQL_Devnote
         }
     }
 
-    internal class Methods
+    internal class Methods : PotentialMultiple<Method>
     {
 
     }
 
-    internal class Method
+    internal class Method : NamedData
     {
         public string Name { get; set; }
         public string Definition { get; set; }
-//        public List<string, string> Parameters 
+        public Dictionary<string, string> Parameters { get; set; }
         public string Return { get; set; }
         public string Remarks { get; set; }
         public string Example { get; set; }
+
         public Method(string name)
         {
             Name = name;
             Definition = string.Empty;
+            Parameters = new Dictionary<string, string>();
             Remarks = string.Empty;
             Example = string.Empty;
         }

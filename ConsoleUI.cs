@@ -38,7 +38,7 @@ namespace SQL_Devnote
                 Logo();
                 NumMenu(mainMenu);
 
-                GetIntInput(out int result);
+                GetUserInput(out int result);
                 switch (result)
                 {
                     case 1:
@@ -62,7 +62,7 @@ namespace SQL_Devnote
                 Logo();
                 NumMenu(dataMenu);
 
-                GetIntInput(out int result);
+                GetUserInput(out int result);
                 switch (result)
                 {
                     case 1:
@@ -88,7 +88,7 @@ namespace SQL_Devnote
                 Logo();
                 //                NumMenu();
 
-                GetIntInput(out int result);
+                GetUserInput(out int result);
                 switch (result)
                 {
                     case 1:
@@ -114,7 +114,7 @@ namespace SQL_Devnote
                 Logo();
                 NumMenu(addMenu);
 
-                GetIntInput(out int result);
+                GetUserInput(out int result);
                 switch (result)
                 {
                     case 1:
@@ -149,19 +149,27 @@ namespace SQL_Devnote
                 NumMenu(classMenu);
                 // https://stackoverflow.com/questions/60767909/c-sharp-console-app-how-do-i-make-an-interactive-menu
 
-                GetIntInput(out int result);
+                GetUserInput(out int result);
                 switch (result)
                 {
                     case 1:
                         return;
                     case 2:
-                        Data data = new Data("yay");
-                        string[] fields = data.GetFieldInfo();
-
-                        foreach (var s in fields)
+                        Data data = new Data("Int32");
+                        data.fields.Add(new Field("MaxValue"));
+                        data.fields.Add(new Field("MinValue"));
+                        var list = data.fields.GetItemList();
+                        foreach (var item in list)
                         {
-                            Console.WriteLine(s);
+                            Console.WriteLine(item);
                         }
+
+                        //string[] fields = data.GetFieldInfo();
+
+                        //foreach (var s in fields)
+                        //{
+                        //    Console.WriteLine(s);
+                        //}
                         Console.ReadKey();
                         break;
                     case 3:
@@ -194,7 +202,7 @@ namespace SQL_Devnote
         #endregion
 
         #region UserInput
-        private void GetIntInput(out int result)
+        private void GetUserInput(out int result)
         {
             Console.WriteLine();
             Console.ForegroundColor = commandColor;
@@ -217,28 +225,28 @@ namespace SQL_Devnote
             }
         }
 
-        private string GetStringInput()   // using return value for both error code and a valid result is not the best option
+        private void GetUserInput(out string result)
         {
             Console.WriteLine();
             Console.ForegroundColor = commandColor;
             Console.WriteLine("    ");
             Console.ForegroundColor = baseColor;
 
+            result = "";
+
             try
             {
                 string? input = Console.ReadLine();
-                if (int.TryParse(input, out int result))
-                {
-                    //return result;
-                }
+                //if (int.TryParse(input, out result))
+                //{
+                //    //return result;
+                //}
             }
             catch (Exception e)
             {
                 PrintError(e.Message);
                 Console.Clear();
             }
-
-            return "";
         }
         #endregion
 
