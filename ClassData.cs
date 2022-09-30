@@ -9,21 +9,35 @@ using System.Threading.Tasks;
 // https://learn.microsoft.com/en-us/ef/ef6/modeling/code-first/migrations/
 namespace SQL_Devnote
 {
+    //enum AdditionalType
+    //{
+    //    Fields,
+    //    Methods,
+    //    Properties,
+    //    Operators,
+    //    ExtensionMethods,
+    //    Interfaces
+    //    // Assembly ----> is this supposed to be here?
+    //}
+
     internal class ClassData
     {
         public int ID { get; set; }         // assigned when inserted into DB
-        public string parent_ID;            // perhaps namespace ID
         public string name;
+        public string parent_ID;            // perhaps namespace ID
         public string definition;
         public string description;
         public Tags tags;
-
-        public string[] additional;         // IDs of additional 
+        public Additionals additionals;         // IDs of additional 
 
         public ClassData(string name)
         {
             this.name = name;
-            this.tags = new Tags();
+            parent_ID = string.Empty;
+            definition = string.Empty;
+            description = string.Empty;
+            tags = new Tags();
+            additionals = new Additionals();
         }
 
         public string[] GetFieldInfo()
@@ -31,6 +45,32 @@ namespace SQL_Devnote
             FieldInfo[] fieldInfo = this.GetType().GetFields();             // TODO: get "additional" list as well
             return (from field in fieldInfo
                    select field.Name).ToArray() as string[];                // maybe can be used to call different properties from custom data using expression-dynamic functions? should it be returned in FiledInfo type to access?
+        }
+
+
+
+
+        /*  
+         *  the existence of this method suggests that creating data should be step by step directly
+         *  connected to the DB, not filling all data in and then inserting it into DB at once . . .
+         *  need to reconsider the design
+         *  - do I still need the "Additional" class to proceed this?
+         *  - 
+        */
+        public void AddAdditional()
+        {
+            // get data class object or the class type info and name
+                // if info: create class instance and add name
+            
+            // call corresponding method to create the instance
+                // run until user decides to insert data
+            
+            // if user completes inserting data info, ask DB to generate appropriate ID
+                // DB side: get ID and insert data
+                    // return the ID
+
+            // store the ID, add to "additionals" list
+                // both instance and DB
         }
     }
 
@@ -46,11 +86,11 @@ namespace SQL_Devnote
     }
 
 
-    abstract class PotentialMultiple<T> where T : NamedData
+    abstract class PotentialMultiple<T> where T : BaseData
     {
         private List<T> list = new List<T>();
 
-        public void Add(T item) => list.Add(item);
+        public virtual void Add(T item) => list.Add(item);
         public void Remove(string name)
         {
             T? item = GetItem(name);
@@ -67,12 +107,33 @@ namespace SQL_Devnote
         public T[] GetAllItems() => list.ToArray();
     }
 
-
-    interface NamedData
+    interface BaseData
     {
+        public int ID { get; set; }
         public string Name { get; set; }
+    }
+
+
+    interface NamedData : BaseData
+    {
         public string Definition { get; set; }
         public string Description { get; set; }
+    }
+
+    internal class Additionals : PotentialMultiple<Additional>
+    {
+
+    }
+
+    internal class Additional : BaseData
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+
+        public Additional(string name)      // pass class's name
+        {
+            Name = name;
+        }
     }
 
     internal class Assembly

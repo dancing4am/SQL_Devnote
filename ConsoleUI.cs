@@ -155,14 +155,14 @@ namespace SQL_Devnote
                     case 1:
                         return;
                     case 2:
-                        ClassData data = new ClassData("Int32");                  // I'm testing
-                        data.fields.Add(new Field("MaxValue"));
-                        data.fields.Add(new Field("MinValue"));
-                        var list = data.fields.GetItemList();
-                        foreach (var item in list)
-                        {
-                            Console.WriteLine(item);
-                        }
+                        //ClassData data = new ClassData("Int32");                  // I'm testing
+                        //data.fields.Add(new Field("MaxValue"));
+                        //data.fields.Add(new Field("MinValue"));
+                        //var list = data.fields.GetItemList();
+                        //foreach (var item in list)
+                        //{
+                        //    Console.WriteLine(item);
+                        //}
 
                         //string[] fields = data.GetFieldInfo();
 
