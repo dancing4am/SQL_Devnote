@@ -16,7 +16,7 @@ namespace SQL_Devnote
 
         }
 
-        internal void Add(int type, ref Data data)
+        internal void Add(int type, ref ClassData data)
         {
             try
             {

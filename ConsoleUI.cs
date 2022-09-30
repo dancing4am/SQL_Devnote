@@ -24,7 +24,7 @@ namespace SQL_Devnote
         #endregion
 
 
-        private ConsoleUI()     // close access for singleton
+        private ConsoleUI()     // close access for singleton using "private" constructure
         {
             
         }
@@ -155,7 +155,7 @@ namespace SQL_Devnote
                     case 1:
                         return;
                     case 2:
-                        Data data = new Data("Int32");
+                        ClassData data = new ClassData("Int32");                  // I'm testing
                         data.fields.Add(new Field("MaxValue"));
                         data.fields.Add(new Field("MinValue"));
                         var list = data.fields.GetItemList();
