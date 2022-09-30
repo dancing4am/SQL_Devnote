@@ -33,6 +33,10 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
+# Ignore any files in /bin and /obj Folders
+**/bin/*
+**/obj/*
+
 # Visual Studio 2015/2017 cache/options directory
 .vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
@@ -361,3 +365,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+bin/Debug/net6.0/
